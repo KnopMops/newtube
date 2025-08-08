@@ -4,6 +4,8 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+		"dev:webhook": "clo publish http 3000",
+		"dev:all": "concurrently \"bun dev:webhook\" \"bun dev\"",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
@@ -58,6 +60,7 @@
 		"react-resizable-panels": "^3.0.4",
 		"recharts": "2.15.4",
 		"sonner": "^2.0.7",
+		"svix": "^1.71.0",
 		"tailwind-merge": "^3.3.1",
 		"vaul": "^1.1.2",
 		"zod": "^4.0.15"
@@ -68,6 +71,7 @@
 		"@types/pg": "^8.15.5",
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
+		"concurrently": "^9.2.0",
 		"drizzle-kit": "^0.31.4",
 		"tailwindcss": "^4",
 		"tsx": "^4.20.3",

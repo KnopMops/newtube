@@ -11,6 +11,9 @@
 !.yarn/versions'
 
 drizzle/
+tmp/
+
+bun.lock
 
 # testing
 /coverage
