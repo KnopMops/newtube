@@ -10,7 +10,12 @@ import {
 	TableRow,
 } from '@/components/ui/table'
 import { DEFAULT_LIMIT } from '@/constants'
+import VideoThumbnail from '@/modules/videos/ui/components/video-thumbnail'
 import { trpc } from '@/trpc/client'
+import { snakeCaseToTitle } from '@/utils'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
+import { Globe2Icon, LockIcon } from 'lucide-react'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -45,7 +50,7 @@ const VideosSectionSuspense = () => {
 
 							<TableHead>Видимость</TableHead>
 							<TableHead>Статус</TableHead>
-							<TableHead>Дата</TableHead>
+							<TableHead>Дата создания</TableHead>
 
 							<TableHead className='text-right'>Кол-во просмотров</TableHead>
 							<TableHead className='text-right'>Кол-во комментариев</TableHead>
@@ -57,17 +62,79 @@ const VideosSectionSuspense = () => {
 						{videos.pages
 							.flatMap(page => page.items)
 							.map(video => (
-								<Link href={`/studio/videos/${video.id}`} key={video.id}>
-									<TableRow className='cursor-pointer'>
-										<TableCell>{video.title}</TableCell>
+								<TableRow
+									key={video.id}
+									className='cursor-pointer hover:bg-muted/50'
+								>
+									<TableCell>
+										<Link href={`/studio/videos/${video.id}`} className='block'>
+											<div className='flex items-center gap-4'>
+												<div className='relative aspect-video w-36 shrink-0'>
+													<VideoThumbnail
+														imageUrl={video.thumbnailUrl}
+														previewUrl={video.previewUrl}
+														duration={video.duration || 0}
+													/>
+												</div>
 
-										<TableCell>видимость</TableCell>
+												<div className='flex flex-col overflow-hidden gap-y-1'>
+													<span className='text-sm line-clamp-1'>
+														{video.title}
+													</span>
+													<span className='text-xs text-muted-foreground line-clamp-1'>
+														{video.description || 'Нет описания'}
+													</span>
+												</div>
+											</div>
+										</Link>
+									</TableCell>
 
-										<TableCell>статус</TableCell>
+									<TableCell>
+										<div className='flex items-center'>
+											{video.visibility === 'private' ? (
+												<LockIcon className='size-4 mr-2' />
+											) : (
+												<Globe2Icon className='size-4 mr-2' />
+											)}
 
-										<TableCell>{video.title}</TableCell>
-									</TableRow>
-								</Link>
+											{video.visibility === 'private'
+												? 'Приватное'
+												: 'Публичное'}
+										</div>
+									</TableCell>
+
+									<TableCell className='text-sm truncate'>
+										<div className='flex items-center'>
+											{snakeCaseToTitle(
+												video.muxStatus === 'waiting' ? 'Ожидание' : 'Готов'
+											)}
+										</div>
+									</TableCell>
+
+									<TableCell>
+										{format(new Date(video.createdAt), 'd MMM yyyy', {
+											locale: ru,
+										})}
+									</TableCell>
+
+									<TableCell>
+										{format(new Date(video.createdAt), 'd MMM yyyy', {
+											locale: ru,
+										})}
+									</TableCell>
+
+									<TableCell>
+										{format(new Date(video.createdAt), 'd MMM yyyy', {
+											locale: ru,
+										})}
+									</TableCell>
+
+									<TableCell>
+										{format(new Date(video.createdAt), 'd MMM yyyy', {
+											locale: ru,
+										})}
+									</TableCell>
+								</TableRow>
 							))}
 					</TableBody>
 				</Table>
