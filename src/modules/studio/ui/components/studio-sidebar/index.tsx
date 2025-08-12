@@ -30,7 +30,7 @@ const StudioSidebar = () => {
 								tooltip='Мой контент'
 								asChild
 							>
-								<Link href='/'>
+								<Link href='/studio'>
 									<VideoIcon className='size-5' />
 									<span className='text-sm'>Мой контент</span>
 								</Link>

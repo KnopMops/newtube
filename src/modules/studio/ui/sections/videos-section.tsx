@@ -1,6 +1,7 @@
 'use client'
 
 import InfiniteScroll from '@/components/infinite-scroll'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
 	Table,
 	TableBody,
@@ -22,11 +23,76 @@ import { ErrorBoundary } from 'react-error-boundary'
 
 const VideosSection = () => {
 	return (
-		<Suspense fallback={<p>Загрузка...</p>}>
+		<Suspense fallback={<VideosSectionSkeleton />}>
 			<ErrorBoundary fallback={<p>Ошибка...</p>}>
 				<VideosSectionSuspense />
 			</ErrorBoundary>
 		</Suspense>
+	)
+}
+
+const VideosSectionSkeleton = () => {
+	return (
+		<>
+			<div className='border-y'>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							<TableHead className='pl-6 w-[510px]'>Видео</TableHead>
+
+							<TableHead>Видимость</TableHead>
+							<TableHead>Статус</TableHead>
+							<TableHead>Дата создания</TableHead>
+
+							<TableHead className='text-right'>Кол-во просмотров</TableHead>
+							<TableHead className='text-right'>Кол-во комментариев</TableHead>
+							<TableHead className='text-right pr-6'>Кол-во лайков</TableHead>
+						</TableRow>
+					</TableHeader>
+
+					<TableBody>
+						{Array.from({ length: 5 }).map((_, index) => (
+							<TableRow key={index}>
+								<TableCell className='pl-6'>
+									<div className='flex items-center gap-4'>
+										<Skeleton className='h-20 w-36' />
+
+										<div className='flex flex-col gap-2'>
+											<Skeleton className='h-4 w-[100px]' />
+											<Skeleton className='h-3 w-[150px]' />
+										</div>
+									</div>
+								</TableCell>
+
+								<TableCell>
+									<Skeleton className='h-4 w-20' />
+								</TableCell>
+
+								<TableCell>
+									<Skeleton className='h-4 w-16' />
+								</TableCell>
+
+								<TableCell>
+									<Skeleton className='h-4 w-24' />
+								</TableCell>
+
+								<TableCell>
+									<Skeleton className='h-4 w-12 ml-auto' />
+								</TableCell>
+
+								<TableCell>
+									<Skeleton className='h-4 w-12 ml-auto' />
+								</TableCell>
+
+								<TableCell>
+									<Skeleton className='h-4 w-12 ml-auto' />
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
+		</>
 	)
 }
 
@@ -117,23 +183,11 @@ const VideosSectionSuspense = () => {
 										})}
 									</TableCell>
 
-									<TableCell>
-										{format(new Date(video.createdAt), 'd MMM yyyy', {
-											locale: ru,
-										})}
-									</TableCell>
+									<TableCell className='text-right text-sm'></TableCell>
 
-									<TableCell>
-										{format(new Date(video.createdAt), 'd MMM yyyy', {
-											locale: ru,
-										})}
-									</TableCell>
+									<TableCell className='text-right text-sm'></TableCell>
 
-									<TableCell>
-										{format(new Date(video.createdAt), 'd MMM yyyy', {
-											locale: ru,
-										})}
-									</TableCell>
+									<TableCell className='text-right text-sm pr-6'></TableCell>
 								</TableRow>
 							))}
 					</TableBody>
