@@ -256,7 +256,10 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
 															Изменить
 														</DropdownMenuItem>
 
-														<DropdownMenuItem className='cursor-pointer'>
+														<DropdownMenuItem
+															className='cursor-pointer'
+															disabled
+														>
 															<SparklesIcon className='size-4 mr-1' />
 															Сгенерировать ИИ
 														</DropdownMenuItem>
